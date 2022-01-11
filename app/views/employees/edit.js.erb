@@ -1,0 +1,3 @@
+console.log("edit");
+
+$('form.new_employee').html("<%= escape_javascript(render 'form', employee: @employee) %>");

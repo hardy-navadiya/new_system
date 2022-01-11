@@ -1,0 +1,16 @@
+<tbody class="employee">
+	<% @employees.each do |emp| %>
+  	<tr class="tr_<%= emp.id %>">
+  		<td><%= emp.name %></td>
+  		<td><%= emp.email %></td>
+  		<td><%= emp.joining_date %></td>
+  		<td><%= emp.birth_date %></td>
+  		<td>
+          <button class="btn btn-dark edit" data-id="<%= emp.id %>"><i class="fas fa-edit"></i></button>
+        </td>
+  		<td>
+          <button class="btn btn-dark del" data-id="<%= emp.id %>"><i class="fas fa-trash"></i></button>
+        </td>
+  	</tr>
+	<% end %>
+</tbody>

@@ -1,0 +1,99 @@
+<% provide(:title, "employee") %>
+
+<%= render 'form', employee: @employee %> <br>
+
+<table class="clients" style="text-align:center;">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Joining Date</th>
+      <th>Birth Date</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <%= render 'employees/employees_body' %>
+</table>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $('.insert').click(function(event) {
+	  	$.ajax({
+	  		url: '/employees',
+	  		type: 'POST',
+	  		dataType: 'script',
+	  		data :$('form').serialize(),
+ 			beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+	  	})
+	  	.done(function() {
+	  		console.log("success");
+	  	})
+	  	.fail(function() {
+	  		console.log("error");
+	  	})
+	  	.always(function() {
+	  		console.log("complete");
+	  	});
+	  });
+
+	  $('.del').click(function(event) {
+	  	console.log('del-->',$(this).data('id'));
+	  	$.ajax({
+          url: '/employees/' + $(this).data('id'),
+          type: 'DELETE',
+          dataType: 'script',
+          data: {id: $(this).data('id')},
+        })                          
+        .done(function() {
+          console.log("success");                                                
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+       	});
+	  });
+
+	  $('.edit').click(function(event) {
+	  	console.log('edit-->', $(this).data('id'));
+	  	$.ajax({
+          url: '/employees/' + $(this).data('id') + '/edit',
+          type: 'GET',
+          dataType: 'script',
+          data :$('form').serialize(),
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        })
+        .done(function() {
+          console.log("success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+	  });
+
+	  $(document).on('click', '.update', function(event) {
+      console.log("update class -->", $(this).data('id'));
+
+      $.ajax({
+        url: '/employees/' + $(this).data('id') + '/',
+        type: 'PATCH',
+        dataType: 'script',
+        data: $('form').serialize(),
+      })
+      .done(function() {
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    });
+	});
+</script>

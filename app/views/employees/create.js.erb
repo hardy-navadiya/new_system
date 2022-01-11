@@ -1,0 +1,4 @@
+console.log("create");
+
+$('.employee').remove();
+$('table.clients').append("<%= escape_javascript(render('employees/employees_body')) %>");

@@ -8,7 +8,6 @@ class InvoicesController < ApplicationController
 	end
 
 	def create
-
 		@invoice = Invoice.new(invoice_params)
    
 		respond_to do |format|

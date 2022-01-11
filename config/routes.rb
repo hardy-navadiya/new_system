@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'employees/index'
+  get 'employees/new'
   devise_for :users
   get 'home/index'
   get 'home/error'
@@ -10,4 +12,5 @@ Rails.application.routes.draw do
 
   resources :clients
   resources :invoices
+  resources :employees
 end
