@@ -1,0 +1,117 @@
+<% provide(:title, "create invoice") %>
+<h3 style="text-align:center"> Invoices </h3>
+
+
+<div class="row justify-content-center">
+  <div class="col-md-4 col-md-offset-3">
+    <%= render 'form', invoice: @invoice %>
+  </div>
+</div>
+
+<table class="clients" style="text-align:center;">
+  <thead>
+    <tr>
+      <th>discount</th>
+      <th>date</th>
+      <th>amount</th>
+      <th>Client id</th>
+      <th>Edit</th>
+      <th>Delete</th>
+      <th>PDF</th>
+      <th>View PDF</th>
+    </tr>
+  </thead>
+
+  <%= render 'invoices/invoices_body' %>
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(document).on('click', '.insert', function(event) {
+
+      var formData = new FormData();
+      formData.append('invoice[discount]',$('#invoice_discount').val())
+      formData.append('invoice[date]',$('#invoice_date').val())
+      formData.append('invoice[amount]',$('#invoice_amount').val())
+      formData.append('invoice[document]', $('#invoice_document')[0].files[0])
+      formData.append('invoice[client_id]', $('#invoice_client_id').val())
+
+      console.log(formData);
+      $.ajax({
+        url: '/invoices',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        enctype: 'multipart/form-data',
+        type: 'POST',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
+    });
+
+    $('.del').click(function(event) {
+      console.log('inside click-->',$(this).data('id'));
+      $.ajax({
+          url: '/invoices/' + $(this).data('id'),
+          type: 'DELETE',
+          dataType: 'script',
+          data: {id: $(this).data('id')},
+        })                          
+        .done(function() {
+          console.log("success");                                                
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+    });
+
+    $('.edit').click(function(event) {
+      console.log('edit-->',$(this).data('id'));
+      $.ajax({
+          url: '/invoices/' + $(this).data('id') + '/edit',
+          type: 'GET',
+          dataType: 'script',
+          data :$('form').serialize(),
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        })
+        .done(function() {
+          console.log("success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+    });
+
+    $(document).on('click', '.update', function(event) {
+      console.log("update class -->", $(this).data('id'));
+
+      $.ajax({
+        url: '/invoices/' + $(this).data('id') + '/',
+        type: 'PATCH',
+        dataType: 'script',
+        data: $('form').serialize(),
+      })
+      .done(function() {
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    });
+  });
+</script>

@@ -1,0 +1,21 @@
+<%= form_for(@invoice,multipart: true, class: "invoice-form") do |f| %>
+  <%= f.label :discount %>
+  <%= f.number_field :discount, class:"form-control" %> <br>
+
+  <%= f.label :date %>
+  <%= f.datetime_field :date, class:"form-control" %> <br>
+
+  <%= f.label :amount %>
+  <%= f.number_field :amount, class:"form-control" %> <br>
+
+  <%= f.label :document %>
+  <%= f.file_field :document, class:"form-control document", accept: ".pdf" %> <br>
+
+  <%= f.number_field :client_id, class:"form-control",value: @client.id, type: :hidden %> <br>
+
+  <% if @invoice.id.present? %>
+    <button class="btn btn-secondary update", data-id="<%= invoice.id%>", type="button">Update</button>
+  <% else %>
+    <%= f.submit "create Invoice", class: "btn btn-success insert", type:"button" %>
+  <% end %>
+<% end %>
