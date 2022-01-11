@@ -18,6 +18,18 @@
      		<%= f.datetime_field :birth_date, class:"form-control" %>
 	    </div>
 	    <div class="col">
+	    	<%= f.label :profile,  class:"d-flex justify-content-center" %>
+     		<%= f.file_field :profile, class:"form-control" %>
+	    </div>
+	    <div class="col">
+	    	<%= f.label :a_front,  class:"d-flex justify-content-center" %>
+     		<%= f.file_field :a_front, class:"form-control" %>
+	    </div>
+	    <div class="col">
+	    	<%= f.label :a_back,  class:"d-flex justify-content-center" %>
+     		<%= f.file_field :a_back, class:"form-control" %>
+	    </div>
+	    <div class="col">
 	    	<% if @employee.id.present? %>
 			    <button class="btn btn-primary update", data-id="<%= employee.id%>", type="button">Update</button>
 			  <% else %>

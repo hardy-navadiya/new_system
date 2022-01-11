@@ -5,6 +5,9 @@
   		<td><%= emp.email %></td>
   		<td><%= emp.joining_date %></td>
   		<td><%= emp.birth_date %></td>
+      <td><%= image_tag(emp.profile, style:'width:60%') %></td>
+      <td><%= image_tag(emp.a_front, style:'width:60%') %></td>
+      <td><%= image_tag(emp.a_back, style:'width:60%') %></td>
   		<td>
           <button class="btn btn-dark edit" data-id="<%= emp.id %>"><i class="fas fa-edit"></i></button>
         </td>

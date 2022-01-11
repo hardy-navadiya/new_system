@@ -10,6 +10,7 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params) 
+
     respond_to do |format|
       if @employee.save
         @employees = Employee.all
@@ -59,6 +60,6 @@ class EmployeesController < ApplicationController
 
   private
   def employee_params
-    params.require(:employee).permit(:name, :email, :joining_date, :birth_date)
+    params.require(:employee).permit(:name, :email, :joining_date, :birth_date, :profile, :a_front, :a_back)
   end
 end

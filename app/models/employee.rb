@@ -5,4 +5,7 @@ class Employee < ApplicationRecord
 	validates :email, presence: true, length: { maximum: 255 }, format: { with: regex }, uniqueness: true
 	validates :joining_date, presence: true
 	validates :birth_date, presence: true
+	has_one_attached :profile
+	has_one_attached :a_front
+	has_one_attached :a_back
 end

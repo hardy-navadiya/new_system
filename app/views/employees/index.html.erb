@@ -9,6 +9,9 @@
       <th>Email</th>
       <th>Joining Date</th>
       <th>Birth Date</th>
+      <th>Profile</th>
+      <th>Adhar Front pick</th>
+      <th>Adhar Back pick</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -18,24 +21,36 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-	  $('.insert').click(function(event) {
-	  	$.ajax({
-	  		url: '/employees',
-	  		type: 'POST',
-	  		dataType: 'script',
-	  		data :$('form').serialize(),
- 			beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-	  	})
-	  	.done(function() {
-	  		console.log("success");
-	  	})
-	  	.fail(function() {
-	  		console.log("error");
-	  	})
-	  	.always(function() {
-	  		console.log("complete");
-	  	});
-	  });
+	  $(document).on('click', '.insert', function(event) {
+
+      var formData = new FormData();
+     
+      formData.append('employee[name]',$('#employee_name').val())
+      formData.append('employee[email]',$('#employee_email').val())
+      formData.append('employee[joining_date]',$('#employee_joining_date').val())
+      formData.append('employee[birth_date]',$('#employee_birth_date').val())
+      formData.append('employee[profile]', $('#employee_profile')[0].files[0])
+      formData.append('employee[a_front]', $('#employee_a_front')[0].files[0])
+      formData.append('employee[a_back]', $('#employee_a_back')[0].files[0])
+      // formData.append('invoice[client_id]', $('#invoice_client_id').val())
+
+      $.ajax({
+        url: '/employees',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        enctype: 'multipart/form-data',
+        type: 'POST',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
+    });
 
 	  $('.del').click(function(event) {
 	  	console.log('del-->',$(this).data('id'));
